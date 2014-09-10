@@ -4,7 +4,8 @@
   "description": "MITab Parser",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "autotest": "./node_modules/.bin/supervisor -q -n exit -x ./node_modules/.bin/mocha -- -b"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/jmVillaveces/biojs-io-mitab/issues"
   },
-  "homepage": "https://github.com/jmVillaveces/biojs-io-mitab"
+  "homepage": "https://github.com/jmVillaveces/biojs-io-mitab",
+  "dependencies": {
+    "underscore": "^1.7.0"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.21.4",
+    "supervisor": "^0.6.0"
+  }
 }
