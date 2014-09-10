@@ -1,4 +1,9 @@
 biojs-io-mitab
 ==============
 
-Parses MITab files
+Parsing
+------
+
+```
+var parsedInteractions = require('biojs-io-mitab').parse();
+```
