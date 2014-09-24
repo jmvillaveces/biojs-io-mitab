@@ -12,6 +12,7 @@ module.exports = MITab = (function() {
     // Creates a node from identifiers, alternative idenifiers,
     // and taxonomy values
     var _getNode = function(idStr, altIdsStr, taxStr){
+        
         var ids = _.map(idStr.split('|'), _mapPub);
         var node = {
             id: ids[0].value,
@@ -24,6 +25,11 @@ module.exports = MITab = (function() {
     
     // Parses a string and returns an interaction
     var _parse = function(line, i){
+        
+        if (! _.isString(line) || line.length === 0) {
+            console.warn('MITab cannot parse line ' + i);
+            return;
+        }
         
         var fields = line.split('\t');
         
