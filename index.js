@@ -26,12 +26,17 @@ module.exports = MITab = (function() {
     // Parses a string and returns an interaction
     var _parse = function(line, i){
         
-        if (! _.isString(line) || line.length === 0) {
+        if (! _.isString(line)) {
             console.warn('MITab cannot parse line ' + i);
-            return;
+            return {};
         }
         
         var fields = line.split('\t');
+        
+        if(fields.length < 15) {
+            console.warn('MITab cannot parse line ' + i);
+            return {};
+        }
         
         var nodeA = _getNode(fields[0], fields[2], fields[9]);
         var nodeB = _getNode(fields[1], fields[3], fields[10]);
@@ -108,7 +113,7 @@ module.exports = MITab = (function() {
         
         var lines = text.split('\n');
         
-        var interactions = _.map(lines, _parse)
+        var interactions = _.reject(_.map(lines, _parse), _.isEmpty);
         var nodeval = _.values(nodes);
         
         return {

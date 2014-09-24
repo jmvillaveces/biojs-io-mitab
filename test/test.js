@@ -42,6 +42,10 @@ describe('Parse Interactions', function(){
         assert.throws(mitab.parse, {});
     });
     
+    it('should return empty links', function(){
+        assert.equal(mitab.parse('dummy   interaction with    less    tabs').links, 0)
+    });
+    
     it('should parse the interactions', function(){
         intObj = mitab.parse(intStr);
     });
