@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var parser = require("biojs-io-parser");
 
 module.exports = MITab = (function() {
      
@@ -124,6 +125,8 @@ module.exports = MITab = (function() {
             scores: _.values(scores)
         };
     };
+
+    parser.mixin(MITab);
     
     return MITab;
 })();
