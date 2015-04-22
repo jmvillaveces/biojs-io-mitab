@@ -76,6 +76,10 @@ describe('Check first node', function(){
         assert.equal(intObj.nodes[0].id, 'Q82235');
     });
     
+    it('should have uniprot Q82235', function(){
+        assert.equal(intObj.nodes[0].uniprot, 'Q82235');
+    });
+    
     it('should have ids array', function(){
         assert.isArray(intObj.nodes[0].ids);
     });
@@ -86,6 +90,10 @@ describe('Check first node', function(){
     
     it('should have taxonomy array', function(){
         assert.isArray(intObj.nodes[0].taxonomy);
+    });
+    
+    it('should have geneName tax', function(){
+        assert.strictEqual(intObj.nodes[0].geneName, 'tax');
     });
 });
 
