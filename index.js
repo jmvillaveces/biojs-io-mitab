@@ -8,15 +8,29 @@ module.exports = MITab = (function() {
     var textInParenthesis = /\((.*?)\)/;
     var textInQuotes = /\"(.*?)\"/;
     var textInTax = /\:(.*?)\(/;
+    var geneName = /\((gene name)\)/;
+    var geneNameSynonym = /\((gene name synonym)\)/;
     
     // Creates a node from identifiers, alternative idenifiers,
     // and taxonomy values
-    var _getNode = function(idStr, altIdsStr, taxStr){
+    var _getNode = function(idStr, altIdsStr, aliasStr, taxStr){
+        
+        var aliases = aliasStr.split('|');
+        
+        var gNameStr = _.find(aliases, function(a){ return a.match(geneName);});
+        gNameStr = (gNameStr === undefined) ? _.find(aliases, function(a){ return a.match(geneNameSynonym); }) : gNameStr;
         
         var ids = _.map(idStr.split('|'), _mapPub);
+        
+        //Find Uniprot if there
+        var id = _.find(ids, function(id){
+            return id.name === 'uniprotkb';
+        });
         var node = {
-            id: ids[0].value,
+            id: (id === undefined) ? ids[0].value : id.value,
             ids: ids,
+            uniprot: (id === undefined) ? '' : id.value,
+            geneName: (gNameStr === undefined) ? '' : gNameStr.match(textInTax)[1],
             altIds: _.map(altIdsStr.split('|'), _mapPub),
             taxonomy: _.uniq(_.map(taxStr.split('|'), _mapTaxonomy))
         }
@@ -38,8 +52,8 @@ module.exports = MITab = (function() {
             return {};
         }
         
-        var nodeA = _getNode(fields[0], fields[2], fields[9]);
-        var nodeB = _getNode(fields[1], fields[3], fields[10]);
+        var nodeA = _getNode(fields[0], fields[2], fields[4], fields[9]);
+        var nodeB = _getNode(fields[1], fields[3], fields[5], fields[10]);
         
         
         var interaction = {
