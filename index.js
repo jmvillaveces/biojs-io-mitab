@@ -20,14 +20,16 @@ module.exports = MITab = (function() {
         var gNameStr = _.find(aliases, function(a){ return a.match(geneName);});
         gNameStr = (gNameStr === undefined) ? _.find(aliases, function(a){ return a.match(geneNameSynonym); }) : gNameStr;
         
-        var ids = _.map(idStr.split('|'), _mapPub);
+        
+        var ids = [].concat(idStr.split('|'), altIdsStr.split('|'), aliasStr.split('|'));
+        ids = _.map(ids, _mapPub);
         
         //Find Uniprot if there
         var id = _.find(ids, function(id){
             return id.name === 'uniprotkb';
         });
         var node = {
-            id: (id === undefined) ? ids[0].value : id.value,
+            id: ids[0].value,
             ids: ids,
             uniprot: (id === undefined) ? '' : id.value,
             geneName: (gNameStr === undefined) ? '' : gNameStr.match(textInTax)[1],
