@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/jmVillaveces/biojs-io-mitab",
   "dependencies": {
+    "biojs-io-parser": "^1.0.0",
     "underscore": "^1.7.0"
   },
   "devDependencies": {
